@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 export default function App() {
   const [people, setPeople] = useState([
@@ -11,6 +11,12 @@ export default function App() {
     {name: 'Toad', id: '6'},
     {name: 'Bowser', id: '7'},
   ])
+  const pressHandler = (id) =>{
+    console.log(id)
+    setPeople((prevPeople)=>{
+      return prevPeople.filter(person => person.id != id)
+    })
+  }
    
 
   return (
@@ -21,17 +27,12 @@ export default function App() {
         numColumns={2}
         data={people}
         renderItem={({item})=> (
-          <Text style={styles.item}>{item.name}</Text>
+          <TouchableOpacity onPress={()=> pressHandler(item.id)}>
+            <Text style={styles.item}>{item.name}</Text>
+          </TouchableOpacity>
         )}
       />
 
-      {/* <ScrollView>
-        {people.map((item) => (
-            <View id={item.key}>
-              <Text style={styles.item}>{item.name}</Text>
-            </View>
-        ))}
-      </ScrollView> */}
     </View>
   );
 }
